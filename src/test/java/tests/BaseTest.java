@@ -1,8 +1,14 @@
+package tests;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.CartPage;
+import pages.CheckoutPage;
+import pages.LoginPage;
+import pages.ProductsPage;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -10,8 +16,12 @@ import java.util.HashMap;
 public class BaseTest {
 
     WebDriver driver;
+    LoginPage loginPage;
+    ProductsPage productsPage;
+    CheckoutPage checkoutPage;
+    CartPage cartPage;
 
-    @BeforeMethod (alwaysRun = true)
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
         ChromeOptions options = new ChromeOptions();
         HashMap<String, Object> chromePrefs = new HashMap<>();
@@ -26,14 +36,16 @@ public class BaseTest {
 
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        loginPage = new LoginPage(driver);
+        productsPage = new ProductsPage(driver);
+        checkoutPage = new CheckoutPage(driver);
+        cartPage = new CartPage(driver);
     }
 
-    @AfterMethod (alwaysRun = true)
-    public void tearDown() {
-        //if (driver !=null) {
-           // driver.quit();
-        //}
-
+     @AfterMethod(alwaysRun = true)
+   public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
-
 }
