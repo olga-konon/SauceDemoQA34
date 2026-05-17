@@ -1,19 +1,13 @@
 package tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.sql.SQLOutput;
-import java.util.List;
-
 public class CartTest extends BaseTest {
 
-    String expectedProductName = "Sauce Labs Backpack";
-    String expectedPriceOfProduct = "29.99";
-
-    @Test
+    @Test(testName = "Multiple items added to cart",
+            groups = "regression",
+            description = "Multiple items added to cart")
     public void checkMultipleItemsAddedToCart() {
 
         // Login in
@@ -31,5 +25,3 @@ public class CartTest extends BaseTest {
         Assert.assertEquals(cartPage.getCartSize(), 3, "Not all items were added");
     }
 }
-    
-
