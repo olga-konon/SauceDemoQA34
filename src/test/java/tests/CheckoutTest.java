@@ -6,14 +6,17 @@ import org.testng.annotations.Test;
 
 public class CheckoutTest extends BaseTest {
 
-    @BeforeMethod
+    @BeforeMethod (alwaysRun = true)
     public void openCheckoutPage() {
         // Login in
         loginPage.open();
         loginPage.login("standard_user", "secret_sauce");
     }
 
-    @Test
+    @Test(
+            testName = "Check Checkout with valid data",
+            groups = "smoke",
+            description = "Checks checkout with not empty cart and valid firstName, lastName, zipCode")
     public void checkCheckoutWithPositiveUserData() {
         // Add items to cart
         productsPage.addToCart("Sauce Labs Backpack");
@@ -35,7 +38,9 @@ public class CheckoutTest extends BaseTest {
         Assert.assertEquals(checkoutPage.getTitle(), "Checkout: Complete!", "User didn't checkout");
     }
 
-    @Test
+    @Test(testName = "Check subtotal Price equals to sum of items",
+            groups = "regression",
+            description = "Check subtotal Price equals to sum of items")
     public void checkSubtotalPriceEqualsToSumOfItems() {
         // Add items to cart
         productsPage.addToCart("Sauce Labs Backpack");
@@ -52,7 +57,9 @@ public class CheckoutTest extends BaseTest {
         Assert.assertEquals(checkoutPage.calculateItemsSum(), checkoutPage.getSubtotalPrice(), "Sum of items is not equal");
     }
 
-    @Test
+    @Test(testName = "Check total price equals subtotal plus tax",
+            groups = "regression",
+            description = "Check total price equals subtotal plus tax")
     public void checkTotalPriceEqualsSubtotalPlusTax() {
         // Add items to cart
         productsPage.addToCart("Sauce Labs Backpack");
@@ -70,7 +77,9 @@ public class CheckoutTest extends BaseTest {
         Assert.assertEquals(checkoutPage.getTotalPrice(), checkoutPage.calculateTotalSum(), 0.01, "TotalSum is not equal");
     }
 
-    @Test
+    @Test(testName = "Check checkout with empty user data",
+            groups = "regression",
+            description = "Check checkout with empty user data")
     public void checkCheckoutWithEmptyUserData() {
         // Add items to cart
         productsPage.addToCart("Sauce Labs Backpack");
@@ -87,7 +96,9 @@ public class CheckoutTest extends BaseTest {
         Assert.assertEquals(checkoutPage.getErrorMessage(), "Error: First Name is required", "User data is missing");
     }
 
-    @Test
+    @Test(testName = "Check checkout with empty cart",
+            groups = "regression",
+            description = "Check checkout with cart")
     public void checkCheckoutWithEmptyCart() {
         //Open Cart and click Checkout
         productsPage.clickCart();
