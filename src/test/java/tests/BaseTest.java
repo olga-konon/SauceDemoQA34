@@ -1,14 +1,13 @@
 package tests;
 
+import io.qameta.allure.testng.AllureTestNg;
+import listeners.TestListener;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.annotations.*;
 import pages.CartPage;
 import pages.CheckoutPage;
 import pages.LoginPage;
@@ -17,13 +16,18 @@ import pages.ProductsPage;
 import java.time.Duration;
 import java.util.HashMap;
 
+@Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
 
-    WebDriver driver;
-    LoginPage loginPage;
-    ProductsPage productsPage;
-    CheckoutPage checkoutPage;
-    CartPage cartPage;
+    protected WebDriver driver;
+    protected LoginPage loginPage;
+    protected ProductsPage productsPage;
+    protected CheckoutPage checkoutPage;
+    protected CartPage cartPage;
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 
     @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
@@ -40,12 +44,16 @@ public class BaseTest {
             options.addArguments("--disable-infobars");
             driver = new ChromeDriver(options);
 
-
         } else if (browser.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
+
         } else if (browser.equalsIgnoreCase("edge")) {
             driver = new EdgeDriver();
+
+        } else {
+            throw new IllegalArgumentException("Unsupported browser: " + browser);
         }
+
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 

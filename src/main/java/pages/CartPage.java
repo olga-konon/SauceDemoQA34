@@ -1,23 +1,38 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class CartPage  extends BasePage{
+public class CartPage extends BasePage {
 
     public CartPage(WebDriver driver) {
         super(driver);
     }
 
+    private final By CHECKOUT_BUTTON = By.cssSelector("[data-test='checkout']");
     private final By CART_ITEMS = By.cssSelector("[data-test='inventory-item']");
     private final By ITEM_NAME = By.cssSelector("[data-test='inventory-item-name']");
     private final By ITEM_PRICE = By.cssSelector("[data-test='inventory-item-price']");
     private final By REMOVE_BUTTON = By.tagName("button");
 
-    public  List<WebElement>  getCartItems() {
+    @Override
+    public CartPage isPageOpened() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BUTTON));
+        return this;
+    }
+
+    @Step("Click Checkout button")
+    public CheckoutPage clickCheckoutButton() {
+        driver.findElement(CHECKOUT_BUTTON).click();
+        return new CheckoutPage(driver);
+    }
+
+    public List<WebElement> getCartItems() {
         List<WebElement> cartItems = driver.findElements(CART_ITEMS);
 
         for (WebElement item : cartItems) {
@@ -30,6 +45,7 @@ public class CartPage  extends BasePage{
         return cartItems;
     }
 
+    @Step("Get Cart size")
     public int getCartSize() {
         return getCartItems().size();
     }

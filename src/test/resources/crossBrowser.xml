@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite thread-count="3"
        name="SauceDemo crossBrowser"
-       parallel="classes">
+       parallel="tests">
 
     <test name="Chrome">
         <classes>
