@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
+@Log4j2
 public class CartPage extends BasePage {
 
     public CartPage(WebDriver driver) {
@@ -22,12 +24,14 @@ public class CartPage extends BasePage {
 
     @Override
     public CartPage isPageOpened() {
+        log.info("Wait until Cart page is opened");
         wait.until(ExpectedConditions.visibilityOfElementLocated(CHECKOUT_BUTTON));
         return this;
     }
 
     @Step("Click Checkout button")
     public CheckoutPage clickCheckoutButton() {
+        log.info("Click Checkout button");
         driver.findElement(CHECKOUT_BUTTON).click();
         return new CheckoutPage(driver);
     }
@@ -47,6 +51,8 @@ public class CartPage extends BasePage {
 
     @Step("Get Cart size")
     public int getCartSize() {
-        return getCartItems().size();
+        int cartSize = getCartItems().size();
+        log.info("Cart size: {}", cartSize);
+        return cartSize;
     }
 }

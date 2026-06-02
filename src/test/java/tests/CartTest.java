@@ -2,8 +2,12 @@ package tests;
 
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import lombok.extern.log4j.Log4j2;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.ProductsPage;
+
+@Log4j2
 
 public class CartTest extends BaseTest {
 
@@ -15,7 +19,6 @@ public class CartTest extends BaseTest {
 
     public void checkMultipleItemsAddedToCart() {
 
-        // Login in
         loginPage.open()
                 .isPageOpened()
                 .login("standard_user", "secret_sauce")
