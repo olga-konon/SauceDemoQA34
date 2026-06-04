@@ -9,16 +9,15 @@
 name: SauceDemo CI 
 
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      USER: ${{secrets.SD_user}}
+      PASSWORD: ${{secrets.SD_password}}
 
     steps:
     - uses: actions/checkout@v4
@@ -29,4 +28,4 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Run tests
-      run: mvn clean test
+      run: mvn clean test -Duser=$USER -Dpassword=$PASSWORD

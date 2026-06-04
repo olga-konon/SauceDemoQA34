@@ -26,7 +26,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithPositiveCred(ITestContext iTestContext) {
         loginPage.open()
                 .isPageOpened()
-                .login("standard_user", "secret_sauce")
+                .login(user, password)
                 .isPageOpened();
         Assert.assertEquals(productsPage.getTitle(), "Products", "User didn't login");
     }
@@ -40,7 +40,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithEmptyUserName() {
         loginPage.open()
                 .isPageOpened()
-                .loginWithNotValidCred("", "secret_sauce")
+                .loginWithNotValidCred("", password)
                 .isPageOpened();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Username is required", "Username is required");
     }
@@ -53,7 +53,7 @@ public class LoginTest extends BaseTest {
     public void checkLoginWithEmptyPassword() {
         loginPage.open()
                 .isPageOpened()
-                .loginWithNotValidCred("standard_user", "")
+                .loginWithNotValidCred(user, "")
                 .isPageOpened();
         Assert.assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required", "Password is required");
     }
