@@ -48,16 +48,16 @@ public class BaseTest {
             driver = new ChromeDriver(options);
 
         } else if (browser.equalsIgnoreCase("firefox")) {
-            driver = new FirefoxDriver();
             FirefoxOptions options = new FirefoxOptions();
             options.addArguments("--headless");
+
             driver = new FirefoxDriver(options);
 
 
         } else if (browser.equalsIgnoreCase("edge")) {
-            driver = new EdgeDriver();
             EdgeOptions options = new EdgeOptions();
             options.addArguments("--headless");
+
             driver = new EdgeDriver(options);
 
         } else {
