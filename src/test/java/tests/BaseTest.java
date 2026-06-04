@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.*;
 import pages.CartPage;
 import pages.CheckoutPage;
@@ -42,13 +44,21 @@ public class BaseTest {
             options.addArguments("--disable-notifications");
             options.addArguments("--disable-popup-blocking");
             options.addArguments("--disable-infobars");
+            options.addArguments("--headless");
             driver = new ChromeDriver(options);
 
         } else if (browser.equalsIgnoreCase("firefox")) {
             driver = new FirefoxDriver();
+            FirefoxOptions options = new FirefoxOptions();
+            options.addArguments("--headless");
+            driver = new FirefoxDriver(options);
+
 
         } else if (browser.equalsIgnoreCase("edge")) {
             driver = new EdgeDriver();
+            EdgeOptions options = new EdgeOptions();
+            options.addArguments("--headless");
+            driver = new EdgeDriver(options);
 
         } else {
             throw new IllegalArgumentException("Unsupported browser: " + browser);
