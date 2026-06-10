@@ -21,8 +21,8 @@ import java.util.HashMap;
 @Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
 
-    protected String user = System.getProperty("user");
-    protected String password = System.getProperty("password");
+    String user = System.getProperty("user", PropertyReader.getProperty("user"));
+    String password = System.getProperty("password", PropertyReader.getProperty("password"));
 
     protected WebDriver driver;
     protected LoginPage loginPage;
